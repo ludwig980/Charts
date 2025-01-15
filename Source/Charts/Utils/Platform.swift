@@ -3,7 +3,7 @@ import Foundation
 /** This file provides a thin abstraction layer atop of UIKit (iOS, tvOS) and Cocoa (OS X). The two APIs are very much 
 alike, and for the chart library's usage of the APIs it is often sufficient to typealias one to the other. The NSUI*
 types are aliased to either their UI* implementation (on iOS) or their NS* implementation (on OS X). */
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 	import UIKit
 
 
@@ -13,7 +13,10 @@ types are aliased to either their UI* implementation (on iOS) or their NS* imple
 	public typealias NSUIFont = UIFont
 	public typealias NSUIImage = UIImage
 	public typealias NSUIScrollView = UIScrollView
+
+#if !os(visionOS)
     public typealias NSUIScreen = UIScreen
+#endif
 	public typealias NSUIDisplayLink = CADisplayLink
 
     extension NSUIColor
@@ -49,6 +52,7 @@ types are aliased to either their UI* implementation (on iOS) or their NS* imple
         }
     }
     
+#if !os(visionOS)
     extension UIScreen
     {
         @objc final var nsuiScale: CGFloat
@@ -61,6 +65,8 @@ types are aliased to either their UI* implementation (on iOS) or their NS* imple
     {
         return NSUIScreen.main
     }
+#endif
+    
 
 #endif
 
