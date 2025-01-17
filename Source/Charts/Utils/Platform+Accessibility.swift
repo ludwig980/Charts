@@ -65,7 +65,12 @@ open class NSUIAccessibilityElement: UIAccessibilityElement
 #if !os(visionOS)
             super.accessibilityFrame = containerView.convert(newValue, to: UIScreen.main.coordinateSpace)
 #else
-            // FIXME
+            if let window = containerView.window {
+                super.accessibilityFrame = containerView.convert(newValue, to: window.coordinateSpace)
+            } else {
+                // Handle cases where the view is not yet added to a window
+                super.accessibilityFrame = newValue
+            }
 #endif
         }
     }

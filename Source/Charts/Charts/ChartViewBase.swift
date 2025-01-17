@@ -707,7 +707,8 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
 #if !os(visionOS)
         NSUIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque || !transparent, NSUIMainScreen()?.nsuiScale ?? 1.0)
 #else
-        NSUIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque || !transparent, 1.0)
+        // Passing 0.0 as scale on AVP should calculate the scale automatically
+        NSUIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque || !transparent, 0.0)
 #endif
         
         guard let context = NSUIGraphicsGetCurrentContext()

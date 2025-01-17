@@ -9,6 +9,7 @@
 #if canImport(UIKit)
     import UIKit
 #endif
+import SwiftUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        #if !os(visionOS)
         self.window = UIWindow(frame: UIScreen.main.bounds)
+        #else
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let firstWindow = windowScene.windows.first {
+            self.window = firstWindow
+        }
+        #endif
+
         
         
         let vc = DemoListViewController()
