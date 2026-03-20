@@ -389,9 +389,14 @@ open class YAxisRenderer: NSObject, AxisRenderer
         }
 
         // Normalize interval
-        let intervalMagnitude = pow(10.0, Double(Int(log10(interval)))).roundedToNextSignificant()
-        let intervalSigDigit = Int(interval / intervalMagnitude)
-        if intervalSigDigit > 5
+        var intervalMagnitude = 1.0
+        var intervalSigDigit: Int = 1
+        if !interval.isNaN && !interval.isInfinite
+        {
+            intervalMagnitude = pow(10.0, Double(Int(log10(interval)))).roundedToNextSignificant()
+            intervalSigDigit = Int(interval / intervalMagnitude)
+        }
+        if interval.isNaN || interval.isInfinite || intervalSigDigit > 5
         {
             // Use one order of magnitude higher, to avoid intervals like 0.9 or 90
             interval = floor(10.0 * Double(intervalMagnitude))

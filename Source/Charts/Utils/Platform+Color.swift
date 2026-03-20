@@ -28,7 +28,7 @@ private let labelColor: UIColor = fetchLabelColor()
 
 extension UIColor
 {
-    static var labelOrBlack: UIColor { labelColor }
+    public static var labelOrBlack: UIColor { labelColor }
 }
 #endif
 
@@ -52,6 +52,6 @@ private let labelColor: NSColor = fetchLabelColor()
 
 extension NSColor
 {
-    static var labelOrBlack: NSColor { labelColor }
+    public static var labelOrBlack: NSColor { labelColor }
 }
 #endif

@@ -496,7 +496,8 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
         #if os(visionOS)
         if !drawGridBackgroundEnabled
         {
-            context.clear(viewPortHandler.contentRect)
+//            context.clear(viewPortHandler.contentRect)
+            context.clear(self.contentRect)
         }
         #endif
         
