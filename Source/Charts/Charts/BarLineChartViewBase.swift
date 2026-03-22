@@ -482,24 +482,25 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     /// draws the grid background
     internal func drawGridBackground(context: CGContext)
     {
+        #if os(visionOS)
+        // visionOS does not clear the view's backing store between draw() calls.
+        // Clearing only contentRect (the previous approach) left the margin areas
+        // untouched, causing axis label text from prior frames to accumulate and
+        // produce ghosting/flickering. Clearing the full view bounds fixes this.
+        context.clear(self.bounds)
+        #endif
+
         if drawGridBackgroundEnabled || drawBordersEnabled
         {
             context.saveGState()
         }
-        
+
         if drawGridBackgroundEnabled
         {
             // draw the grid background
             context.setFillColor(gridBackgroundColor.cgColor)
             context.fill(viewPortHandler.contentRect)
         }
-        #if os(visionOS)
-        if !drawGridBackgroundEnabled
-        {
-//            context.clear(viewPortHandler.contentRect)
-            context.clear(self.contentRect)
-        }
-        #endif
         
         if drawBordersEnabled
         {
